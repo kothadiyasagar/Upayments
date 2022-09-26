@@ -48,7 +48,7 @@ export  const productReducer = (
              case PRODUCT_DELETE:
                 return  {...state ,product:action.product} 
              case PRODUCT_LIKES:
-              console.log("productid")
+         
               return  {...state ,productId:action.productId} 
             default:
               return state;
