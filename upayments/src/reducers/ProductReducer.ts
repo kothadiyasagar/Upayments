@@ -1,4 +1,4 @@
-import { ProductActionTypes , PRODUCT_REQUEST, PRODUCT_CREATE , PRODUCT_SUCCESS,PRODUCT_LIKE,PRODUCT_DELETE} from "../actions/action"
+import { ProductActionTypes , PRODUCT_REQUEST ,PRODUCT_LIKES, PRODUCT_SUCCESS,PRODUCT_LIKE,PRODUCT_DELETE} from "../actions/action"
 
 interface Product {
     _id :  string
@@ -18,13 +18,17 @@ interface Product {
    interface ProductState {
     loading : boolean;
     product : Product[]
-    id : Id[]
+    id : Id[],
+    productId : Id[]
+    
    }
 
    const defaultState : ProductState = {
     loading : false ,
     product : [],
-    id : []
+    id : [],
+    productId : []
+    
    }
 
 export  const productReducer = (
@@ -39,10 +43,13 @@ export  const productReducer = (
             case PRODUCT_SUCCESS:
               return { ...state ,loading: false, product: action.product };
             case PRODUCT_LIKE:
-              console.log("sagar",action.id)
+   
               return {...state, loading: false ,id:action.id};
              case PRODUCT_DELETE:
                 return  {...state ,product:action.product} 
+             case PRODUCT_LIKES:
+              console.log("productid")
+              return  {...state ,productId:action.productId} 
             default:
               return state;
           }

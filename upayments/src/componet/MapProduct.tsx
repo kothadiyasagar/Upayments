@@ -1,10 +1,11 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux';
 
 import { HeartSwitch } from '@anatoliygatt/heart-switch';
 import {Navigate, useNavigate} from "react-router-dom";
-import {like} from "../../src/actions/ProductAction"
+import {like,likes} from "../../src/actions/ProductAction"
+
 interface Product {
     _id :  string
     name:string
@@ -31,11 +32,27 @@ interface Product {
 const MapProduct = (props:Data) => {
   const navigate = useNavigate();
   const[fevoriteId, setFevoiteId] = useState<any>([])
+
   const id = useSelector((state:any) => state.product.id  );
+  
+  const   productId =useSelector((state:any) => state.product.productId  );
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
   const {productData , setproductData, getDelete} = props
+  const updateFavorite = ()=>{
+    const updateId =  productId.find((like:string) => like ===props.elem._id);
+    console.log(updateId,"43")
+    if(updateId){
+      setChecked(true)
+    }
 
+
+  }
+
+  useEffect(()=>{
+    updateFavorite()
+  },[id])
+  const updateId =  productId.find((like:string) => like ===props.elem._id);
   const  fevoriteProduvt = (event:any)=>{
    let appendId =event.target.checked
 
@@ -45,11 +62,13 @@ const MapProduct = (props:Data) => {
       return elem._id.toString() == c.toString()
     })
       let d:any =  [...id,apendIdData]
-
+      let pId = [...productId,c]
 console.log(d)
+   dispatch(likes(pId))
    dispatch(like(d))
    setChecked(true)
-   console.log(id)
+  //  console.log(id)
+   console.log(productId,"producid56")
    }
    else {
     
@@ -76,7 +95,21 @@ console.log(d)
       <del>
          <p className="text-sm text-gray-600 cursor-auto ml-2">${Number(props.elem.price)+200}</p>
        </del>
-       { <div className="ml-auto">
+       { updateId ? 
+       <div className="ml-auto">
+       <HeartSwitch
+size="sm"
+inactiveTrackFillColor="#f59c9c"
+inactiveTrackStrokeColor="#ee2222"
+activeTrackFillColor="#d40606"
+activeTrackStrokeColor="#b20808"
+inactiveThumbColor="#ecfeff"
+activeThumbColor="#ecfeff"
+checked= {true}
+
+ 
+/>
+</div> : <div className="ml-auto">
                    <HeartSwitch
    size="sm"
    inactiveTrackFillColor="#f59c9c"

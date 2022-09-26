@@ -1,5 +1,5 @@
 export const PRODUCT_REQUEST = "PRODUCT_REQUEST";
-export const PRODUCT_CREATE = "PRODUCT_CREATE";
+export const PRODUCT_LIKES = "PRODUCT_LIKES";
 export const PRODUCT_SUCCESS = "PRODUCT_SUCCESS";
 export const PRODUCT_LIKE = "PRODUCT_LIKE";
 export const PRODUCT_DELETE = "PRODUCT_DELETE "
@@ -22,7 +22,8 @@ export const PRODUCT_DELETE = "PRODUCT_DELETE "
 interface ProductAsync {
     loading : boolean;
     product : Product[];
-    id : Id[]
+    id : Id[];
+    productId : []
 
 }
 
@@ -37,6 +38,9 @@ interface FetchProductRequest extends ProductAsync {
   interface FetchProductLike extends ProductAsync {
     type: typeof PRODUCT_LIKE;
   }
+  interface FetchProductLikes extends ProductAsync {
+    type: typeof PRODUCT_LIKES;
+  }
   
   interface FetchTProductDelete extends ProductAsync {
     type: typeof PRODUCT_DELETE;
@@ -48,3 +52,4 @@ interface FetchProductRequest extends ProductAsync {
     | FetchProductSuccess
     |  FetchTProductDelete
     |FetchProductLike
+    |FetchProductLikes

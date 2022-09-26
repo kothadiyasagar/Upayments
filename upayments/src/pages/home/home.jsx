@@ -5,7 +5,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import {receiveTodos ,daleteTodos }  from "../../actions/ProductAction"
+import {receiveTodos ,daleteTodos ,requestTodos}  from "../../actions/ProductAction"
 
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
  import    "../../pages/home/home.css"
@@ -97,13 +97,15 @@ function Home() {
    }
 
   useEffect(()=>{
+    dispatch(requestTodos())
     getData()
     getCategory()
   },[])
 
 
   return (
-    <div className="maindiv"  >
+    <>
+  <div className="maindiv"  >
     
  
     
@@ -144,7 +146,7 @@ function Home() {
     Favorite
 </button>
       </div>
-       <div  id='mapdata' >
+      { product.product.loading ?  "loading....":<div  id='mapdata' >
         {
          productData.map(function(elem,index){
           // console.log(elem,"m cffpd")
@@ -156,8 +158,10 @@ function Home() {
            )
          })
         }
-       </div>
+       </div>}
     </div>
+  
+    </>
   )
 }
 
